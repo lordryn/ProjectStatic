@@ -58,10 +58,11 @@ class SiteBuilder:
         self.copy_assets()
         self.scan_posts()
 
-        # Load Templates
-        with open(os.path.join(self.config.TEMPLATE_DIR, 'post_template.html'), 'r') as f:
+        # Load Templates (FIX: Added encoding='utf-8')
+        with open(os.path.join(self.config.TEMPLATE_DIR, 'post_template.html'), 'r', encoding='utf-8') as f:
             post_template = f.read()
-        with open(os.path.join(self.config.TEMPLATE_DIR, 'index_template.html'), 'r') as f:
+
+        with open(os.path.join(self.config.TEMPLATE_DIR, 'index_template.html'), 'r', encoding='utf-8') as f:
             index_template = f.read()
 
         # Generate Individual Pages
