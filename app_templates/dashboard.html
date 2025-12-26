@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WCS | Control Node</title>
+    <style>
+        :root { --bg: #0f1115; --panel: #161b22; --text: #c9d1d9; --accent: #2ea043; --danger: #da3633; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Courier New', monospace; padding: 40px; }
+
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { border-bottom: 2px solid var(--panel); padding-bottom: 10px; margin-bottom: 30px; color: #fff; }
+
+        /* Action Bar */
+        .actions { display: flex; gap: 15px; margin-bottom: 40px; }
+        .btn { padding: 12px 20px; text-decoration: none; color: #fff; border-radius: 4px; font-weight: bold; border: none; cursor: pointer; display: inline-block; }
+        .btn-green { background-color: var(--accent); }
+        .btn-green:hover { background-color: #3fb950; }
+        .btn-blue { background-color: #1f6feb; }
+        .btn-blue:hover { background-color: #388bfd; }
+
+        /* File List */
+        .file-list { background: var(--panel); border: 1px solid #30363d; border-radius: 6px; padding: 10px; }
+        .file-item { padding: 10px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        .file-item:last-child { border-bottom: none; }
+        .file-name { color: var(--text); }
+        .status-dot { height: 8px; width: 8px; background-color: var(--accent); border-radius: 50%; display: inline-block; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>// SYSTEM_CONTROL</h1>
+
+        <div class="actions">
+            <a href="/editor" class="btn btn-blue">+ NEW LOG ENTRY</a>
+
+            <a href="/trigger_build" class="btn btn-green">EXECUTE BUILD_SEQUENCE</a>
+        </div>
+
+        <h2>// STORAGE_MANIFEST</h2>
+        <div class="file-list">
+            {% if files %}
+                {% for file in files %}
+                <div class="file-item">
+                    <div>
+                        <span class="status-dot"></span>
+                        <span class="file-name">{{ file }}</span>
+                    </div>
+                    <span style="font-size: 0.8em; color: #8b949e;">READY</span>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="file-item" style="color: #8b949e; justify-content: center;">
+                    [NO DATA FOUND]
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

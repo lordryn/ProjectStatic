@@ -2,20 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ TITLE }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ TITLE }} | WCS</title>
     <style>
-        body { background-color: #0f1115; color: #c9d1d9; font-family: monospace; max-width: 800px; margin: 0 auto; padding: 40px; }
-        h1 { border-bottom: 2px solid #30363d; padding-bottom: 10px; }
-        .meta { color: #2ea043; margin-bottom: 40px; }
-        pre { background: #161b22; padding: 15px; border-radius: 5px; }
+        :root { --bg: #0f1115; --panel: #161b22; --text: #c9d1d9; --accent: #2ea043; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Courier New', monospace; margin: 0; line-height: 1.6; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; padding-top: 40px; }
+
+        /* Post Header */
+        h1 { color: #fff; font-size: 2.5rem; border-bottom: 1px solid #30363d; padding-bottom: 20px; }
+        .meta { color: var(--accent); font-weight: bold; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Markdown Content Styling */
+        h2, h3 { color: #fff; margin-top: 40px; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background: var(--panel); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        pre { background: var(--panel); padding: 15px; border-radius: 6px; overflow-x: auto; border: 1px solid #30363d; }
+        blockquote { border-left: 4px solid var(--accent); padding-left: 15px; color: #8b949e; margin-left: 0; }
+
+        /* Navigation */
+        .nav-footer { margin-top: 60px; border-top: 1px solid #30363d; padding-top: 20px; }
+        .btn-back { color: #8b949e; text-decoration: none; font-weight: bold; }
+        .btn-back:hover { color: #fff; }
     </style>
 </head>
 <body>
-    <h1>{{ TITLE }}</h1>
-    <div class="meta">Date: PUBLISHED_DATE</div>
+    <div class="container">
+        <a href="../index.html" class="btn-back">← TERMINAL ROOT</a>
 
-    {{ CONTENT }}
+        <h1>{{ TITLE }}</h1>
+        <div class="meta">LOG DATE: PUBLISHED_DATE</div>
 
-    <p><a href="../index.html">← Back to Home</a></p>
+        {{ CONTENT }}
+
+        <div class="nav-footer">
+            <p>&copy; 2025 WCS Business Systems</p>
+        </div>
+    </div>
 </body>
 </html>
