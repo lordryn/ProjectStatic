@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WCS | Local Test</title>
+    <style>
+        :root { --bg: #0f1115; --panel: #161b22; --text: #c9d1d9; --accent: #2ea043; }
+        body { background-color: var(--bg); color: var(--text); font-family: monospace; padding: 20px; }
+        .card { border: 1px solid #30363d; padding: 15px; margin-bottom: 10px; border-radius: 5px; background: #161b22; }
+        h3 { color: #fff; margin-top: 0; }
+        a { color: var(--accent); text-decoration: none; font-weight: bold; }
+        .grid { display: grid; gap: 20px; }
+    </style>
+</head>
+<body>
+    <h1>WCS Local Dev Environment</h1>
+    <h2>Recent Logs</h2>
+
+    <div class="grid">
+        {{ POSTS_GRID }}
+    </div>
+</body>
+</html>
