@@ -1,4 +1,4 @@
-# WCS Static Site Generator: Project Status & Roadmap
+# ProjectStatic Site Generator: Project Status & Roadmap
 
 **Date:** 2025-12-26
 **Current Version:** 1.0 (CLI Builder)
