@@ -1,98 +1,104 @@
 # ProjectStatic: Static Site Control Node
 
-**Date:** 2025-12-26
-**Current Version:** 2.0 (Local WebApp)
+**Current Version:** 2.1 (LAN / Staging Support)
 **Status:** Operational / Active Development
 
 ---
 
-## 1. System Overview (v2.0)
+## 1. System Overview
 
-ProjectStatic has evolved from a simple CLI script into a modular Python Web Application. It runs locally as a control node, providing a Graphical User Interface (GUI) to manage content, trigger builds, and administrate the static site generation process.
+ProjectStatic is a modular Python Web Application designed to manage static site generation. It runs as a **Control Node**, providing a Web GUI to manage content, trigger builds, and preview the site before going live.
+
+**v2.1 Update:** Now supports remote access via LAN and includes a built-in staging server to preview the generated HTML without an external web server.
 
 ### Key Capabilities
 
-* **Web Interface**
-  A Flask-based dashboard (`localhost:5000`) to view status and trigger actions.
+* **Web Dashboard** (`:5000`)
+  Manage files, trigger builds, and view system status from any device on your network.
 
-* **Input Terminal**
-  A dedicated GUI for writing and saving new Markdown logs without touching the file system manually.
-
-* **Modular Engine**
-  The core logic is decoupled into a robust core package, separating configuration, content generation, and building logic.
+* **Staging Server**
+  Instantly preview the full generated site via the **VIEW STAGED SITE** button.
 
 * **Atomic Builds**
-  The `SiteBuilder` class completely wipes and regenerates the `public/` directory on every build to ensure zero redundancy.
+  The `SiteBuilder` engine wipes and regenerates the output directory on every build to ensure zero redundancy.
+
+* **Environment Config**
+  Paths and secrets are managed via `.env` files, making it safe to deploy on different servers.
 
 ---
 
-## 2. Architecture & Modules
+## 2. Installation & Setup
 
-The project is structured as an Object-Oriented application managed by `app.py`.
+### Prerequisites
 
-### Directory Structure
+* Python 3.x
+* `pip`
 
-```text
-Project/
-├── app.py              # CONTROLLER: Flask Web Server entry point
-├── core/               # MODEL: Logic Package
-│   ├── __init__.py     # Exposes modules to app.py
-│   ├── config.py       # Centralized pathing & settings
-│   ├── builder.py      # Static Site Generation Engine
-│   ├── generator.py    # Markdown file creation logic
-│   └── routes.py       # Flask Blueprints (Dashboard logic)
-├── app_templates/      # UI: Admin Panel HTML
-├── templates/          # SITE: Public site HTML templates
-├── content/            # DATA: Source Markdown & static assets
-└── public/             # OUTPUT: Generated live site
+### 2.1 Install Dependencies
+
+```bash
+pip install -r requirements.txt
 ```
 
----
+### 2.2 Configuration (.env)
 
-## 3. Workflow & Usage
+Create a `.env` file in the project root:
 
-### Starting the Control Node
+```ini
+# Path to where the HTML files should be generated
+PROJECT_OUTPUT_DIR=C:/Path/To/Your/Public/Folder
 
-Instead of running a script, launch the application server:
+# Secret key for session security (Flash messages)
+FLASK_SECRET_KEY=change-this-to-something-random
+
+# Base URL for the Staging Preview (usually /public)
+PROJECT_LIVE_URL=/public
+```
+
+### 2.3 Run the Control Node
 
 ```bash
 python app.py
 ```
 
 Access the dashboard at:
+`http://localhost:5000` (or your machine's IP address).
 
+---
+
+## 3. Workflow
+
+* **Create**
+  Use the **+ NEW LOG ENTRY** button to write content in Markdown.
+
+* **Manage**
+  View or delete existing logs from the Dashboard list.
+
+* **Build**
+  Click **EXECUTE BUILD_SEQUENCE** to compile Markdown into HTML.
+
+* **Preview**
+  Click **VIEW STAGED SITE** to browse the generated site in a safe staging environment.
+
+* **Deploy**
+  *(External)* Sync the `PROJECT_OUTPUT_DIR` to your live web server.
+
+---
+
+## 4. Directory Structure
+
+```text
+Project/
+├── app.py              # CONTROLLER: Flask Web Server entry point
+├── .env                # CONFIG: Local environment settings (Ignored by Git)
+├── requirements.txt    # DEPS: Python package list
+├── core/               # MODEL: Logic Package
+│   ├── builder.py      # Static Site Generation Engine
+│   ├── config.py       # Configuration Loader
+│   ├── generator.py    # File creation logic
+│   └── routes.py       # Flask Routing & Logic
+├── content/            # DATA: Source Markdown & static assets
+│   ├── posts/          # .md files
+│   └── static/         # Images/CSS to be copied to public
+└── public/             # OUTPUT: The generated website (Target of Build)
 ```
-http://127.0.0.1:5000
-```
-
----
-
-### Creating Content
-
-1. Navigate to **+ NEW LOG ENTRY** in the dashboard.
-2. Fill in the **Entry Title** and **Summary**.
-3. Write the post in the **Markdown Payload** area.
-4. Click **COMMIT TO STORAGE** to save the `.md` file to `content/posts/`.
-
----
-
-### Building the Site
-
-Click **EXECUTE BUILD_SEQUENCE** on the dashboard.
-
-The `SiteBuilder` engine will:
-
-1. Clean the `public/` directory.
-2. Copy assets from `content/static/`.
-3. Convert all Markdown files to HTML.
-4. Inject rendered content into `templates/`.
-
-The live site is now available in `public/`.
-
----
-
-## 4. Roadmap
-
-* **v2.1** – Live Preview (render Markdown in-browser before saving)
-* **v2.5** – Drag-and-Drop Asset Management
-* **v3.0** – Server Deployment Pipelines (one-click push to live)

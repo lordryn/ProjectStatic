@@ -7,7 +7,16 @@
         :root { --bg: #0f1115; --panel: #161b22; --text: #c9d1d9; --accent: #2ea043; --danger: #da3633; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Courier New', monospace; padding: 40px; }
 
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto;
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        }
+
         h1 { border-bottom: 2px solid var(--panel); padding-bottom: 10px; margin-bottom: 30px; color: #fff; }
 
         /* Action Bar */
@@ -33,6 +42,8 @@
         <div class="actions">
             <a href="/editor" class="btn btn-blue">+ NEW LOG ENTRY</a>
 
+            <a href="{{ config.LIVE_URL }}/public/index.html" target="_blank" class="btn" style="background-color: #6e40c9;">VIEW STAGED SITE</a>
+
             <a href="/trigger_build" class="btn btn-green">EXECUTE BUILD_SEQUENCE</a>
         </div>
 
@@ -45,7 +56,11 @@
                         <span class="status-dot"></span>
                         <span class="file-name">{{ file }}</span>
                     </div>
-                    <span style="font-size: 0.8em; color: #8b949e;">READY</span>
+                    <a href="{{ config.LIVE_URL }}/public/posts/{{ file.replace('.md', '.html') }}" target="_blank" class="btn-sm">VIEW</a>
+
+                    <form action="{{ url_for('dashboard.delete_post', filename=file) }}" method="POST" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Delete this log?')" class="btn-sm btn-danger">X</button>
+                    </form>
                 </div>
                 {% endfor %}
             {% else %}

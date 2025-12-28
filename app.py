@@ -10,6 +10,9 @@ app_config = Config()
 builder = SiteBuilder(app_config)
 md_gen = MarkdownGenerator(app_config)
 
+app.secret_key = app_config.SECRET_KEY
+
+
 # Register the View Routes (The Dashboard & Editor Pages)
 app.register_blueprint(dashboard_bp)
 
@@ -43,5 +46,5 @@ def save_post():
 
 if __name__ == '__main__':
     print("--- PROJECT STATIC v2.0 ONLINE ---")
-    print("Open http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+    print("Open http://0.0.0.0:5000")
+    app.run(host='0.0.0.0', debug=True, port=5000)
